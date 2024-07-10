@@ -1,128 +1,54 @@
-import React, { useState } from 'react';
-
-const Button = ({ onClick, children, className }) => (
-  <button
-    onClick={onClick}
-    className={`px-4 py-2 bg-black text-white rounded hover:bg-gray-800 ${className}`}
-  >
-    {children}
-  </button>
-);
-
-const Input = ({ value, onChange, placeholder, className }) => (
-  <input
-    type="text"
-    value={value}
-    onChange={onChange}
-    placeholder={placeholder}
-    className={`border border-gray-300 rounded px-3 py-2 ${className}`}
-  />
-);
-
-const CatererTaskManagement = () => {
-  const [tasks, setTasks] = useState([
-    { id: 1, description: 'Prepare quote for wedding', dueDate: '2024-07-20', status: 'Pending' },
-    { id: 2, description: 'Order supplies for corporate event', dueDate: '2024-07-15', status: 'In Progress' },
-    { id: 3, description: 'Follow up with client about menu changes', dueDate: '2024-07-12', status: 'Completed' },
-  ]);
-  const [newTask, setNewTask] = useState('');
-  const [deletedTasks, setDeletedTasks] = useState([]);
-  const [showDeletedTasks, setShowDeletedTasks] = useState(false);
-
-  const addTask = () => {
-    if (newTask.trim() !== '') {
-      const newTaskObj = {
-        id: Date.now(), // Use timestamp for unique ID
-        description: newTask,
-        dueDate: new Date().toISOString().split('T')[0],
-        status: 'Pending'
-      };
-      setTasks([...tasks, newTaskObj]);
-      setNewTask('');
-    }
-  };
-
-  const deleteTask = (task) => {
-    setTasks(tasks.filter(t => t.id !== task.id));
-    setDeletedTasks([...deletedTasks, {...task, deletedAt: new Date().toISOString()}]);
-  };
-
-  const undeleteTask = (task) => {
-    setDeletedTasks(deletedTasks.filter(t => t.id !== task.id));
-    setTasks([...tasks, task]);
-  };
-
-  return (
-    <div className="p-6 max-w-4xl mx-auto bg-white text-black">
-      <h1 className="text-2xl font-bold mb-6">Task Management</h1>
-      
-      <div className="flex mb-4">
-        <Input
-          value={newTask}
-          onChange={(e) => setNewTask(e.target.value)}
-          placeholder="Enter new task"
-          className="flex-grow mr-2"
-        />
-        <Button onClick={addTask}>
-          Add Task
-        </Button>
-      </div>
-
-      <table className="w-full border-collapse mb-6">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border px-4 py-2 text-left">Task</th>
-            <th className="border px-4 py-2 text-left">Due Date</th>
-            <th className="border px-4 py-2 text-left">Status</th>
-            <th className="border px-4 py-2 text-left">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tasks.map((task) => (
-            <tr key={task.id}>
-              <td className="border px-4 py-2">{task.description}</td>
-              <td className="border px-4 py-2">{task.dueDate}</td>
-              <td className="border px-4 py-2">{task.status}</td>
-              <td className="border px-4 py-2">
-                <Button onClick={() => deleteTask(task)} className="bg-red-500 hover:bg-red-600">
-                  Delete
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <Button onClick={() => setShowDeletedTasks(!showDeletedTasks)} className="mb-4">
-        {showDeletedTasks ? 'Hide' : 'Show'} Deleted Tasks
-      </Button>
-
-      {showDeletedTasks && (
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="border px-4 py-2 text-left">Deleted Task</th>
-              <th className="border px-4 py-2 text-left">Deleted At</th>
-              <th className="border px-4 py-2 text-left">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {deletedTasks.map((task) => (
-              <tr key={task.id}>
-                <td className="border px-4 py-2">{task.description}</td>
-                <td className="border px-4 py-2">{new Date(task.deletedAt).toLocaleString()}</td>
-                <td className="border px-4 py-2">
-                  <Button onClick={() => undeleteTask(task)} className="bg-green-500 hover:bg-green-600">
-                    Undelete
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
-  );
-};
-
-export default CatererTaskManagement;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Website</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="home">
+            <h2>Home</h2>
+            <p>Welcome to our website. We are glad to have you here. Explore our services and learn more about what we offer.</p>
+        </section>
+        <section id="about">
+            <h2>About Us</h2>
+            <p>We are a company dedicated to providing the best services to our clients. Our team is composed of experienced professionals who are passionate about their work.</p>
+        </section>
+        <section id="services">
+            <h2>Our Services</h2>
+            <p>We offer a wide range of services to meet your needs, including:</p>
+            <ul>
+                <li>Service 1</li>
+                <li>Service 2</li>
+                <li>Service 3</li>
+                <li>And many more...</li>
+            </ul>
+        </section>
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>If you have any questions or would like more information, please contact us:</p>
+            <address>
+                Email: <a href="mailto:info@example.com">info@example.com</a><br>
+                Phone: +1 234 567 890<br>
+                Address: 1234 Street Name, City, Country
+            </address>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Our Company. All rights reserved.</p>
+    </footer>
+</body>
+</html>
